@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  basePath: '/Beyond-The-Frame',
   images: {
     unoptimized: true,
     remotePatterns: [
