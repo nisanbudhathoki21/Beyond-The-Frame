@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Nepal Lens Studio — Premium Photography & Cinematography Website
 **Sunwal, Nawalparasi, Nepal** • Canon EOS Rebel T7 • NPR • English + Nepali-ready
 
@@ -49,6 +48,3 @@ Set `DATABASE_URL=postgresql://...`, `JWT_SECRET` (64+ chars), `ADMIN_PASSWORD_H
 - [x] Mustang/Himalayan/Village collections functional
 - [x] 3D camera renders, follows scroll, mobile fallback, respects reduced-motion
 - [x] All pages work, booking validated front+back, admin works, auth+RBAC, security headers, tests pass
-=======
-# Beyond-The-Frame
->>>>>>> 48c456f4345a40568edda9d27813fa365090a5c1
