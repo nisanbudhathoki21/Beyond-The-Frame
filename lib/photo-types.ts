@@ -1,10 +1,9 @@
-export type CategoryId = "streets" | "vehicles" | "animals" | "weddings" | "mountains" | "nature";
+export type CategoryId = "streets" | "vehicles" | "animals" | "mountains" | "nature";
 
 export const categories: { id: CategoryId; label: string; blurb: string }[] = [
   { id: "streets", label: "Streets", blurb: "Markets, lanes and the people in them." },
   { id: "vehicles", label: "Cars and roads", blurb: "Cars, bikes and the roads they own." },
   { id: "animals", label: "Animals and birds", blurb: "Dogs, birds and wildlife, found by waiting." },
-  { id: "weddings", label: "Weddings", blurb: "Ceremonies and the quiet moments around them." },
   { id: "mountains", label: "Mountains and travel", blurb: "Hills, light and the road there." },
   { id: "nature", label: "Nature", blurb: "Trees, gardens and quiet light." },
 ];

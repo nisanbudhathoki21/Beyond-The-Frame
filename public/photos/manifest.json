@@ -1,13 +1,24 @@
 [
   {
+    "id": "animals-dog",
+    "category": "animals",
+    "file": "photos/animals/dog.webp",
+    "thumb": "photos/animals/dog-thumb.webp",
+    "w": 4000,
+    "h": 6000,
+    "alt": "A slender golden-tan street dog sits quietly on a grey road, gazing to the side with a calm expression.",
+    "caption": "A quiet moment on the streets of Nepal.",
+    "place": ""
+  },
+  {
     "id": "animals-husky",
     "category": "animals",
     "file": "photos/animals/husky.webp",
     "thumb": "photos/animals/husky-thumb.webp",
     "w": 1086,
     "h": 1448,
-    "alt": "A red and white husky with pale blue eyes sits on grass and looks up at the camera with its mouth open.",
-    "caption": "Blue eyes, big smile",
+    "alt": "A chocolate-and-white Siberian Husky with icy blue eyes sits on green grass, looking up with its tongue out and fluffy tail curled behind.",
+    "caption": "A playful spirit beneath the afternoon light.",
     "place": "",
     "focus": "50% 40%"
   },
@@ -18,10 +29,21 @@
     "thumb": "photos/animals/sparrow-thumb.webp",
     "w": 415,
     "h": 739,
-    "alt": "A sparrow perches on a rusty metal railing against a soft green background.",
-    "caption": "A sparrow on the railing",
+    "alt": "A small cream, grey and brown sparrow perches on a weathered rusty metal railing against a softly blurred green background.",
+    "caption": "A little pause in the morning stillness.",
     "place": "",
     "focus": "50% 45%"
+  },
+  {
+    "id": "weddings-nepali-wedding-couple",
+    "category": "weddings",
+    "file": "photos/weddings/nepali-wedding-couple.webp",
+    "thumb": "photos/weddings/nepali-wedding-couple-thumb.webp",
+    "w": 5304,
+    "h": 7952,
+    "alt": "A smiling Nepali wedding couple poses in a cobbled courtyard. The groom wears a red patterned topi and grey blazer, while the bride wears a richly embroidered red lehenga, gold and green jewellery and a red veil.",
+    "caption": "A celebration of love and Nepali tradition.",
+    "place": ""
   },
   {
     "id": "mountains-prayer-flags",
@@ -30,8 +52,8 @@
     "thumb": "photos/mountains/prayer-flags-thumb.webp",
     "w": 2000,
     "h": 1722,
-    "alt": "A rock painted with a colourful Buddhist wheel and mantra in Tibetan script beside a white stupa, with lines of prayer flags across a pine-covered slope.",
-    "caption": "Prayer flags and a painted mani stone",
+    "alt": "Colorful Buddhist prayer flags cross a rocky pine-covered mountainside above a boulder painted with Tibetan sacred script and a bright Buddhist wheel beside a small white stupa.",
+    "caption": "Faith carried by the mountain wind.",
     "place": "",
     "focus": "50% 45%"
   },
@@ -42,10 +64,21 @@
     "thumb": "photos/mountains/valley-bridge-thumb.webp",
     "w": 1200,
     "h": 1600,
-    "alt": "A suspension bridge crosses a pale glacial river in a cloudy Himalayan valley, with a yellow-roofed building and jagged grey cliffs behind.",
-    "caption": "A bridge over the river",
+    "alt": "A suspension bridge crosses a pale glacial river in a wide Himalayan valley surrounded by rugged mountains, low clouds, scattered buildings and a winding dirt road.",
+    "caption": "A crossing through the heart of the Himalayas.",
     "place": "",
     "focus": "50% 62%"
+  },
+  {
+    "id": "nature-nature",
+    "category": "nature",
+    "file": "photos/nature/nature.webp",
+    "thumb": "photos/nature/nature-thumb.webp",
+    "w": 5899,
+    "h": 3932,
+    "alt": "A one-horned rhinoceros grazes in a green grassland beneath a broad tree, with golden morning sunlight filtering through the mist and a stream winding through the meadow.",
+    "caption": "Where the wild begins its day.",
+    "place": ""
   },
   {
     "id": "nature-tree-garden",
@@ -54,8 +87,8 @@
     "thumb": "photos/nature/tree-garden-thumb.webp",
     "w": 1333,
     "h": 2000,
-    "alt": "A broad green tree in a hazy morning garden, circled by a low brick wall, with a trimmed hedge in the foreground.",
-    "caption": "A tree in the morning haze",
+    "alt": "A lush green tree stands in a manicured garden, surrounded by an octagonal brick border and neatly trimmed hedges beneath a hazy sky.",
+    "caption": "A quiet place beneath the green canopy.",
     "place": "",
     "focus": "50% 55%"
   }

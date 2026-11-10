@@ -1,98 +1,394 @@
+
 import Link from "next/link";
-import ScrollStory, { type Scene } from "@/components/ScrollStory";
 import { business } from "@/lib/config";
 import { getPhotos } from "@/lib/photos";
-import type { Photo } from "@/lib/photo-types";
-import { asset } from "@/lib/site";
 import { allServices } from "@/lib/services";
 import { npr } from "@/lib/format";
-
-type Chapter = { cat: string; idx?: number; id: string; title: string; text: string; label: string; side?: "left" | "right" };
-const chapters: Chapter[] = [
-  { cat: "streets", id: "streets", title: "Streets that never sit still.", text: "Markets, lanes and the people in them.", label: "Streets", side: "right" },
-  { cat: "vehicles", id: "roads", title: "Roads, and what crosses them.", text: "Cars, bikes and the highways they own.", label: "Cars and roads" },
-  { cat: "animals", id: "animals", title: "Small lives, close up.", text: "Dogs, birds and wildlife, found by waiting.", label: "Animals and birds", side: "right" },
-  { cat: "weddings", id: "weddings", title: "The day, and the minutes around it.", text: "Ceremonies, family and the small moments nobody planned.", label: "Weddings" },
-  { cat: "mountains", idx: 1, id: "mountains", title: "Hills, light, and the road there.", text: "Prayer flags, rivers and high valleys.", label: "Mountains and travel", side: "right" },
-];
+import { asset } from "@/lib/site";
+import type { Photo } from "@/lib/photo-types";
 
 export default function Home() {
   const photos = getPhotos();
-  const latest = photos.slice(0, 8);
-  const from = (id: string) => allServices.find((s) => s.id === id)!;
-  const inCat = (c: string) => photos.filter((p) => p.category === c);
-  const bg = (p?: Photo) => (p ? { src: asset(p.file), alt: p.alt, focus: p.focus } : undefined);
 
-  const scenes: Scene[] = [
+  const heroPhoto =
+    photos.find((photo) => photo.category === "mountains") ??
+    photos.find((photo) => photo.category === "nature") ??
+    photos[0];
+
+  const featured = photos.slice(0, 6);
+
+  const portrait = allServices.find((service) => service.id === "individual");
+  const wedding = allServices.find((service) => service.id === "wedding");
+
+  const categories = [
     {
-      id: "start", art: "sky", photo: bg(inCat("mountains")[0]),
-      title: "Nepal, one frame at a time.",
-      text: "Mountains, animals, streets and weddings, shot on a Canon Rebel T7 with an 18–55mm lens. Based in Sunwal.",
-      cta: [{ href: "/portfolio/", label: "See the frames", primary: true }, { href: "/contact/", label: "Book a shoot" }],
+      id: "portraits",
+      number: "01",
+      title: "Portraits",
+      description: "Personal stories, expressions and connections.",
+      href: "/services/",
     },
-    // A chapter only appears once you have a real photo for it.
-    ...chapters.flatMap((c): Scene[] => {
-      const p = inCat(c.cat)[c.idx ?? 0];
-      return p ? [{ id: c.id, art: "sky", photo: bg(p), title: c.title, text: c.text, side: c.side, cta: [{ href: `/portfolio/#${c.cat}`, label: c.label }] }] : [];
-    }),
     {
-      id: "book", art: "dawn", photo: bg(inCat("nature")[0]), tone: "dark", side: "right",
-      title: "Have a day worth keeping?",
-      text: `Portraits from ${npr(from("individual").priceNPR)}. Weddings from ${npr(from("wedding").priceNPR)}. Final price confirmed before the shoot.`,
-      cta: [{ href: "/contact/", label: "Book a shoot", primary: true }, { href: "/services/", label: "See rates" }],
+      id: "weddings",
+      number: "02",
+      title: "Weddings & celebrations",
+      description: "Meaningful occasions and the moments around them.",
+      href: "/services/",
+    },
+    {
+      id: "events",
+      number: "03",
+      title: "Events",
+      description: "People, atmosphere and unforgettable gatherings.",
+      href: "/services/",
+    },
+    {
+      id: "commercial",
+      number: "04",
+      title: "Creative & commercial",
+      description: "Products, businesses and visual storytelling.",
+      href: "/services/",
     },
   ];
 
+  const imageStyle = (photo: Photo) => ({
+    objectPosition: photo.focus ?? "center",
+  });
+
   return (
-    <>
-      <ScrollStory scenes={scenes} />
+    <div className="home">
+      <section className="home-hero">
+        <div className="home-hero-copy">
+          <p className="home-kicker">
+            <span />
+            PHOTOGRAPHY · NEPAL · VISUAL STORIES
+          </p>
 
-      {latest.length > 0 && (
-        <section className="section">
-          <div className="wrap">
-            <div className="section-head"><h2 className="display">Latest frames</h2></div>
-            <div className="strip">
-              {latest.map((p) => (
-                <Link key={p.id} href={`/portfolio/#${p.category}`} aria-label={p.caption || p.alt || "View in gallery"}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={asset(p.thumb)} width={p.w} height={p.h} alt={p.alt || ""} loading="lazy" decoding="async" />
-                </Link>
-              ))}
+          <h1 className="home-title">
+            Some moments
+            <br />
+            deserve to
+            <br />
+            <em>live forever.</em>
+          </h1>
+
+          <p className="home-lede">
+            Beyond the Frame is about seeing the extraordinary in ordinary
+            moments. Photography shaped by people, places, light and emotion.
+          </p>
+
+          <div className="home-actions">
+            <Link href="/portfolio/" className="btn btn-primary">
+              Explore the portfolio <span aria-hidden="true">↗</span>
+            </Link>
+
+            <Link href="/contact/" className="home-text-link">
+              Plan a photoshoot <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+
+          <div className="home-hero-index">
+            <span>INDEPENDENT PHOTOGRAPHY</span>
+            <span>EST. 2026</span>
+          </div>
+        </div>
+
+        <div className="home-hero-visual">
+          {heroPhoto ? (
+            <figure className="home-hero-image">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset(heroPhoto.file)}
+                alt={heroPhoto.alt}
+                style={imageStyle(heroPhoto)}
+                fetchPriority="high"
+              />
+
+              <figcaption>
+                <span>{heroPhoto.caption || "A moment worth remembering"}</span>
+                <span>{heroPhoto.place || "Nepal"}</span>
+              </figcaption>
+            </figure>
+          ) : (
+            <div className="home-hero-empty">
+              <span>BEYOND THE FRAME</span>
+              <p>Photography begins with seeing.</p>
             </div>
-          </div>
-        </section>
-      )}
+          )}
 
-      <section className="section">
-        <div className="wrap two-col">
-          <div>
-            <h2 className="display" style={{ fontSize: "var(--s-3)" }}>Honest prices, in NPR</h2>
-            <p className="lede" style={{ marginTop: "1rem" }}>Starting rates, confirmed with you before the shoot. Travel beyond Sunwal is quoted separately.</p>
-            <p style={{ marginTop: "1.5rem" }}><Link className="btn btn-quiet" href="/services/">See all rates</Link></p>
+          <div className="home-hero-mark" aria-hidden="true">
+            BTF
           </div>
-          <ul className="teaser">
-            {["individual", "birthday", "wedding"].map((id) => (
-              <li key={id}><b>{from(id).title}</b><span>from {npr(from(id).priceNPR)}</span></li>
+
+          <p className="home-vertical-note">
+            PHOTOGRAPHY / STORIES / PERSPECTIVES
+          </p>
+        </div>
+      </section>
+
+      <section className="home-intro">
+        <div className="home-intro-label">
+          <span>01 / THE APPROACH</span>
+          <span>LOOK CLOSER</span>
+        </div>
+
+        <div className="home-intro-content">
+          <h2>
+            Not just what
+            <br />
+            you see. <em>What you feel.</em>
+          </h2>
+
+          <p>
+            A photograph can hold a place, a feeling and a memory in a single
+            frame. Our approach is simple: notice the details, respect the
+            moment and create photographs that feel genuine.
+          </p>
+
+          <Link href="/about/" className="home-text-link">
+            Discover our story <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+      </section>
+
+      <section className="home-work">
+        <div className="home-section-heading">
+          <div>
+            <p className="home-kicker">
+              <span />
+              02 / SELECTED PHOTOGRAPHS
+            </p>
+            <h2>
+              A collection of
+              <br />
+              <em>moments.</em>
+            </h2>
+          </div>
+
+          <Link href="/portfolio/" className="home-text-link">
+            View all photographs <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+
+        {featured.length > 0 ? (
+          <div className="home-work-grid">
+            {featured.map((photo, index) => (
+              <Link
+                href={`/portfolio/#${photo.category}`}
+                className={`home-work-card home-work-card-${index + 1}`}
+                key={photo.id}
+                aria-label={`Explore ${photo.caption || photo.alt}`}
+              >
+                <div className="home-work-image">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={asset(photo.thumb)}
+                    alt={photo.alt}
+                    width={photo.w}
+                    height={photo.h}
+                    loading="lazy"
+                    decoding="async"
+                    style={imageStyle(photo)}
+                  />
+                  <span className="home-work-arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </div>
+
+                <div className="home-work-caption">
+                  <span>{photo.caption || photo.category}</span>
+                  <span>{photo.place || "Nepal"}</span>
+                </div>
+              </Link>
             ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="wrap two-col">
-          <div>
-            <h2 className="display" style={{ fontSize: "var(--s-3)" }}>The kit</h2>
-            <p className="lede" style={{ marginTop: "1rem" }}>An entry-level camera and a kit lens. I work with the light I find and wait for the moment.</p>
           </div>
-          <dl className="kit">
-            <div><dt>Camera</dt><dd>{business.camera.body}</dd></div>
-            <div><dt>Lens</dt><dd>{business.camera.lens}</dd></div>
-            <div><dt>Sensor</dt><dd>{business.camera.sensor}</dd></div>
-            <div><dt>Focus</dt><dd>{business.camera.focus}</dd></div>
-          </dl>
+        ) : (
+          <p className="empty">
+            The photography collection is being prepared. New frames are on
+            their way.
+          </p>
+        )}
+      </section>
+
+      <section className="home-services">
+        <div className="home-section-heading">
+          <div>
+            <p className="home-kicker">
+              <span />
+              03 / WHAT WE PHOTOGRAPH
+            </p>
+            <h2>
+              Made for the
+              <br />
+              <em>moments that matter.</em>
+            </h2>
+          </div>
+
+          <p className="home-section-description">
+            From personal portraits to important celebrations, every
+            assignment begins with understanding your story.
+          </p>
+        </div>
+
+        <div className="home-service-list">
+          {categories.map((category) => (
+            <Link
+              href={category.href}
+              className="home-service-item"
+              key={category.id}
+            >
+              <span className="home-service-number">{category.number}</span>
+
+              <div>
+                <h3>{category.title}</h3>
+                <p>{category.description}</p>
+              </div>
+
+              <span className="home-service-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </Link>
+          ))}
+        </div>
+
+        <Link href="/services/" className="home-outline-link">
+          Explore all services and rates <span aria-hidden="true">↗</span>
+        </Link>
+      </section>
+
+      <section className="home-philosophy">
+        <div className="home-philosophy-inner">
+          <p className="home-kicker">
+            <span />
+            04 / THE PHILOSOPHY
+          </p>
+
+          <h2>
+            Real people.
+            <br />
+            Real places.
+            <br />
+            <em>Real moments.</em>
+          </h2>
+
+          <p>
+            The best photographs don't need to feel forced. They come from
+            patience, observation and being present when something meaningful
+            happens.
+          </p>
+
+          <Link href="/about/" className="home-text-link">
+            More about our approach <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </section>
 
-    </>
+      <section className="home-rates">
+        <div>
+          <p className="home-kicker">
+            <span />
+            05 / INVEST IN MEMORIES
+          </p>
+
+          <h2>
+            Beautiful photographs.
+            <br />
+            <em>Clear pricing.</em>
+          </h2>
+
+          <p className="home-section-description">
+            Every photoshoot is different. Explore the starting rates and
+            discuss your requirements before confirming a booking.
+          </p>
+
+          <Link href="/services/" className="btn btn-primary">
+            Explore pricing <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+
+        <div className="home-rate-preview">
+          {portrait && (
+            <div>
+              <span>PORTRAITS</span>
+              <strong>From {npr(portrait.priceNPR)}</strong>
+            </div>
+          )}
+
+          {wedding && (
+            <div>
+              <span>WEDDINGS</span>
+              <strong>From {npr(wedding.priceNPR)}</strong>
+            </div>
+          )}
+
+          <p>Starting prices. Final quotation confirmed before booking.</p>
+        </div>
+      </section>
+
+      <section className="home-equipment">
+        <div>
+          <p className="home-kicker">
+            <span />
+            06 / THE EQUIPMENT
+          </p>
+
+          <h2>
+            The camera is a tool.
+            <br />
+            <em>The vision is everything.</em>
+          </h2>
+
+          <p className="home-section-description">
+            Working with a compact DSLR setup and natural light, with an
+            emphasis on observation, composition and authentic moments.
+          </p>
+
+          <Link href="/about/" className="home-text-link">
+            Explore the equipment <span aria-hidden="true">↗</span>
+          </Link>
+        </div>
+
+        <dl className="home-equipment-list">
+          <div>
+            <dt>CAMERA BODY</dt>
+            <dd>{business.camera.body}</dd>
+          </div>
+          <div>
+            <dt>LENS</dt>
+            <dd>{business.camera.lens}</dd>
+          </div>
+          <div>
+            <dt>FILTER</dt>
+            <dd>{business.camera.filter}</dd>
+          </div>
+          <div>
+            <dt>SENSOR</dt>
+            <dd>{business.camera.sensor}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className="home-cta">
+        <p className="home-kicker">
+          <span />
+          LET'S CREATE SOMETHING MEANINGFUL
+        </p>
+
+        <h2>
+          Your story deserves
+          <br />
+          <em>more than a snapshot.</em>
+        </h2>
+
+        <p>
+          Have an event, a portrait session or an idea in mind? Let's talk
+          about it.
+        </p>
+
+        <Link href="/contact/" className="btn btn-primary">
+          Start a conversation <span aria-hidden="true">↗</span>
+        </Link>
+      </section>
+    </div>
   );
 }
