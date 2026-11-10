@@ -194,38 +194,49 @@ button { cursor: pointer; }
 .foot li + li { margin-top: 0.3rem; }
 .fine { margin-top: 2.5rem; color: var(--muted); font-size: 0.85rem; }
 
-/* Scroll story: each scene pins to the screen while you scroll; --p (0 to 1) is set from script. */
+/* Scroll story: each scene pins to the screen while you scroll.
+   --p (0 to 1) is progress through the scene, --e is how far the scene has risen into place,
+   --mx/--my follow the mouse. Script eases all of them so motion stays smooth. */
 :root { --hdr: 4.5rem; }
-.story { position: relative; }
-.scene { --p: 0.5; position: relative; height: 230svh; color: #fff; }
-.stage { position: sticky; top: var(--hdr); height: calc(100svh - var(--hdr)); overflow: hidden; background: #0b1230; }
-.bg { position: absolute; inset: -5%; transform: scale(calc(1.02 + var(--p) * 0.14)) translateY(calc((0.5 - var(--p)) * 6%)); will-change: transform; }
+.story { position: relative; --mx: 0; --my: 0; }
+.scene { --p: 0.5; --e: 1; position: relative; height: 210svh; color: #fff; }
+.stage { position: sticky; top: var(--hdr); height: calc(100svh - var(--hdr)); overflow: hidden; background: #0b1230; transform-origin: 50% 0; transform: perspective(1500px) rotateX(calc((1 - var(--e)) * -9deg)) translateZ(calc((1 - var(--e)) * -160px)); border-radius: calc((1 - var(--e)) * 22px) calc((1 - var(--e)) * 22px) 0 0; backface-visibility: hidden; will-change: transform; }
+.bg { position: absolute; inset: -6%; transform: translate3d(calc(var(--mx) * -1.4%), calc(var(--my) * -1.1% + (0.5 - var(--p)) * 5%), 0) scale(calc(1.04 + var(--p) * 0.12)); will-change: transform; }
 .bg svg, .bg-photo { width: 100%; height: 100%; object-fit: cover; }
-.veil { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 10, 30, 0.6), rgba(8, 10, 30, 0.1) 62%, transparent); pointer-events: none; }
-.scene[data-side="right"] .veil { background: linear-gradient(270deg, rgba(8, 10, 30, 0.6), rgba(8, 10, 30, 0.1) 62%, transparent); }
+.veil { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 10, 30, 0.6), rgba(8, 10, 30, 0.1) 62%, transparent), linear-gradient(0deg, rgba(8, 10, 30, 0.45), transparent 40%); pointer-events: none; }
+.scene[data-side="right"] .veil { background: linear-gradient(270deg, rgba(8, 10, 30, 0.6), rgba(8, 10, 30, 0.1) 62%, transparent), linear-gradient(0deg, rgba(8, 10, 30, 0.45), transparent 40%); }
 .scene[data-tone="dark"] { color: #1a1210; }
-.scene[data-tone="dark"] .veil { background: linear-gradient(90deg, rgba(255, 244, 232, 0.55), rgba(255, 244, 232, 0.1) 62%, transparent); }
-.scene[data-tone="dark"][data-side="right"] .veil { background: linear-gradient(270deg, rgba(255, 244, 232, 0.55), rgba(255, 244, 232, 0.1) 62%, transparent); }
-.copy { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: clamp(2.5rem, 12vh, 8rem); max-width: 40rem; opacity: min(1, calc(var(--p) * 6), calc((1 - var(--p)) * 6)); transform: translateY(calc((0.5 - var(--p)) * 5rem)); }
+.scene[data-tone="dark"] .veil { background: linear-gradient(90deg, rgba(255, 246, 236, 0.62), rgba(255, 246, 236, 0.12) 62%, transparent); }
+.scene[data-tone="dark"][data-side="right"] .veil { background: linear-gradient(270deg, rgba(255, 246, 236, 0.62), rgba(255, 246, 236, 0.12) 62%, transparent); }
+.copy { position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); bottom: clamp(3.5rem, 12vh, 8rem); max-width: 40rem; opacity: min(1, calc(var(--p) * 6), calc((1 - var(--p)) * 6)); transform: translate3d(calc(var(--mx) * 10px), calc((0.5 - var(--p)) * 4.5rem + var(--my) * 6px), 0); }
 .scene[data-side="right"] .copy { left: auto; margin-left: auto; }
 .copy h1, .copy h2 { font-size: var(--s-4); }
 .copy p { margin-top: 1.25rem; font-size: var(--s-1); line-height: 1.45; max-width: 34ch; }
 .scene[data-tone="dark"] .btn-quiet { border-color: rgba(26, 18, 16, 0.5); color: #1a1210; }
 .scene[data-tone="dark"] .btn-quiet:hover { border-color: #1a1210; }
 .scene:not([data-tone="dark"]) .btn-quiet { border-color: rgba(255, 255, 255, 0.6); color: #fff; }
-.scene .vf { z-index: 2; }
+.scene .vf { z-index: 2; transform: translate3d(calc(var(--mx) * -14px), calc(var(--my) * -9px), 0); }
+.scene .vf-bar { left: auto; right: var(--gutter); bottom: 1.25rem; }
+.scene .vf-corner.bl, .scene .vf-corner.br { bottom: 7%; }
 .dots { position: fixed; z-index: 40; right: 1rem; top: 50%; transform: translateY(-50%); }
 .dots ol { display: grid; gap: 0.2rem; }
 .dots a { display: block; width: 1.5rem; height: 1.5rem; position: relative; }
-.dots a::after { content: ""; position: absolute; inset: 0; margin: auto; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: rgba(241, 237, 229, 0.45); border: 1px solid rgba(16, 14, 13, 0.4); transition: transform 0.2s, background-color 0.2s; }
+.dots a::after { content: ""; position: absolute; inset: 0; margin: auto; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: rgba(241, 237, 229, 0.55); border: 1px solid rgba(16, 14, 13, 0.45); transition: transform 0.2s, background-color 0.2s; }
 .dots a[aria-current="true"]::after { background: var(--safe); transform: scale(1.5); }
 @media (max-width: 40rem) { .dots { right: 0.15rem; } .copy p { font-size: 1.05rem; } }
 @media (prefers-reduced-motion: reduce) {
   .scene { height: auto; }
-  .stage { position: relative; top: 0; height: min(88svh, 44rem); }
+  .stage { position: relative; top: 0; height: min(88svh, 44rem); transform: none; border-radius: 0; }
   .bg { transform: none; }
-  .copy { transform: none; opacity: 1; }
+  .copy, .scene .vf { transform: none; opacity: 1; }
 }
-.scene .vf-bar { left: auto; right: var(--gutter); bottom: 1.25rem; }
-.scene .vf-corner.bl, .scene .vf-corner.br { bottom: 7%; }
-.copy { bottom: clamp(3.5rem, 12vh, 8rem); }
+
+/* Gallery depth */
+.sheet button { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s; will-change: transform; }
+.sheet button:hover { box-shadow: 0 22px 44px rgba(0, 0, 0, 0.5); }
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] { animation: lb-in 0.35s ease-out; }
+  .lightbox[open] .lb-img img { animation: lb-img 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); }
+}
+@keyframes lb-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lb-img { from { transform: perspective(1200px) rotateX(7deg) scale(0.93); opacity: 0; } to { transform: perspective(1200px) rotateX(0) scale(1); opacity: 1; } }

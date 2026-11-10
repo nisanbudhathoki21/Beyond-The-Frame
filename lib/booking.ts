@@ -45,7 +45,7 @@ export type BookingClean = z.output<typeof bookingSchema>;
 export function buildMessage(b: BookingClean): string {
   const svc = allServices.find((s) => s.id === b.service)?.title ?? "Not sure yet";
   return [
-    "Hello Nisan, I'd like to book a shoot.",
+    "Hello, I'd like to book a shoot.",
     `Name: ${b.name}`,
     `Service: ${svc}`,
     `Date: ${b.date}`,

@@ -62,7 +62,7 @@ export default function BookingForm() {
         <h2>{sent.wa ? "Ready to send" : "Thanks"}</h2>
         {sent.wa ? (
           <>
-            <p className="muted" style={{ marginTop: "0.5rem" }}>Your details are filled in. Choose how to send them to Nisan. Nothing has been sent yet.</p>
+            <p className="muted" style={{ marginTop: "0.5rem" }}>Your details are filled in. Choose how to send them to me. Nothing has been sent yet.</p>
             <div className="hero-actions">
               <a className="btn btn-primary" href={sent.wa} target="_blank" rel="noopener noreferrer">Send on WhatsApp</a>
               <a className="btn btn-quiet" href={sent.mail}>Send by email</a>
@@ -70,7 +70,7 @@ export default function BookingForm() {
             </div>
             <pre>{sent.text}</pre>
           </>
-        ) : <p className="muted">Nisan will get back to you soon.</p>}
+        ) : <p className="muted">I will get back to you soon.</p>}
       </div>
     );
   }

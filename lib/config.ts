@@ -1,6 +1,6 @@
 export const business = {
   name: "Beyond the Frame",
-  photographer: "Nisan Budhathoki",
+  tagline: "Photography in Sunwal, Nepal",
   whatsapp: "9805432250",
   phones: ["9805432250", "9763651532"],
   email: "nisanbudhathoki21@gmail.com",
@@ -23,7 +23,7 @@ export const navLinks = [
 ];
 
 export const seo = {
-  title: "Beyond the Frame | Nisan Budhathoki, photographer in Sunwal, Nepal",
+  title: "Beyond the Frame | Photography in Sunwal, Nepal",
   description:
-    "Street, wildlife, wedding and travel photography from Nepal by Nisan Budhathoki. Shot on a Canon Rebel T7. Based in Sunwal, serving Butwal, Palpa and nearby areas, with rates in NPR.",
+    "Photography from Nepal: mountains, animals, streets, weddings and travel. Shot on a Canon Rebel T7. Based in Sunwal, serving Butwal, Palpa and nearby areas, with rates in NPR.",
 };

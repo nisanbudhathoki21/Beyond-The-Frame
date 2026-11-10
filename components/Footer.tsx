@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <p className="display" style={{ fontSize: "var(--s-2)" }}>{business.name}</p>
             <p className="muted" style={{ marginTop: "0.6rem", maxWidth: "34ch" }}>
-              Photography by {business.photographer}. Shot on a Canon Rebel T7, based in {business.base}.
+              Photography shot on a Canon Rebel T7, based in {business.base}.
             </p>
           </div>
           <div>
@@ -25,7 +25,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <p className="fine">Serving {business.serviceAreas.join(", ")}. © {new Date().getFullYear()} {business.photographer}. All photographs are mine; please ask before using them.</p>
+        <p className="fine">Serving {business.serviceAreas.join(", ")}. © {new Date().getFullYear()} {business.name}. Please ask before using any photograph.</p>
       </div>
     </footer>
   );

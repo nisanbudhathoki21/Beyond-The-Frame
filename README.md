@@ -13,7 +13,7 @@ Live: https://nisanbudhathoki21.github.io/Beyond-The-Frame/
 
 ## Add your photos
 
-1. Put originals in `photos-raw/<category>/`. Categories: `streets`, `vehicles`, `wildlife`, `weddings`, `mountains`. This folder is git-ignored.
+1. Put originals in `photos-raw/<category>/`. Categories: `streets`, `vehicles`, `animals`, `weddings`, `mountains`, `nature`. This folder is git-ignored.
 2. Run `npm run photos`. It resizes to web size (WebP), reads the camera settings from each photo, and does **not** copy GPS location into the web files.
 3. Open `public/photos/manifest.json` and fill in `alt` (what is in the picture), `caption` and `place` for each photo.
 4. Commit `public/photos` and push. The site rebuilds itself.

@@ -6,7 +6,7 @@ import { asset } from "@/lib/site";
 
 type Filter = "all" | CategoryId;
 const label = (id: CategoryId) => categories.find((c) => c.id === id)?.label ?? id;
-const altOf = (p: Photo) => p.alt || `${label(p.category)} photograph by Nisan Budhathoki`;
+const altOf = (p: Photo) => p.alt || `${label(p.category)} photograph`;
 
 export default function Portfolio({ photos }: { photos: Photo[] }) {
   const [filter, setFilter] = useState<Filter>("all");
@@ -34,9 +34,17 @@ export default function Portfolio({ photos }: { photos: Photo[] }) {
   const step = (n: number) => setOpen((i) => (i === null || list.length === 0 ? i : (i + n + list.length) % list.length));
   const current = open !== null ? list[open] : undefined;
   const counts = (id: CategoryId) => photos.filter((p) => p.category === id).length;
+  const tilt = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+    e.currentTarget.style.setProperty("--rx", `${(-y * 7).toFixed(2)}deg`);
+    e.currentTarget.style.setProperty("--ry", `${(x * 9).toFixed(2)}deg`);
+  };
+  const untilt = (e: React.PointerEvent<HTMLButtonElement>) => { e.currentTarget.style.setProperty("--rx", "0deg"); e.currentTarget.style.setProperty("--ry", "0deg"); };
 
   if (photos.length === 0) {
-    return <p className="empty">The gallery is being edited. The first frames from Chitwan, the streets and weddings are on their way.</p>;
+    return <p className="empty">The gallery is being edited. New frames are on their way.</p>;
   }
 
   return (
@@ -52,7 +60,7 @@ export default function Portfolio({ photos }: { photos: Photo[] }) {
 
       <div className="sheet">
         {list.map((p, i) => (
-          <button key={p.id} type="button" onClick={() => setOpen(i)} aria-label={`Open photo: ${p.caption || altOf(p)}`}>
+          <button key={p.id} type="button" onPointerMove={tilt} onPointerLeave={untilt} onClick={() => setOpen(i)} aria-label={`Open photo: ${p.caption || altOf(p)}`}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset(p.thumb)} width={p.w} height={p.h} alt={altOf(p)} loading="lazy" decoding="async" />
             {(p.caption || p.place) && <span className="cap">{[p.caption, p.place].filter(Boolean).join(", ")}</span>}

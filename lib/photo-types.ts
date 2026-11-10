@@ -1,11 +1,12 @@
-export type CategoryId = "streets" | "vehicles" | "wildlife" | "weddings" | "mountains";
+export type CategoryId = "streets" | "vehicles" | "animals" | "weddings" | "mountains" | "nature";
 
 export const categories: { id: CategoryId; label: string; blurb: string }[] = [
   { id: "streets", label: "Streets", blurb: "Markets, lanes and the people in them." },
   { id: "vehicles", label: "Cars and roads", blurb: "Cars, bikes and the roads they own." },
-  { id: "wildlife", label: "Chitwan wildlife", blurb: "Animals and birds from Chitwan National Park." },
+  { id: "animals", label: "Animals and birds", blurb: "Dogs, birds and wildlife, found by waiting." },
   { id: "weddings", label: "Weddings", blurb: "Ceremonies and the quiet moments around them." },
   { id: "mountains", label: "Mountains and travel", blurb: "Hills, light and the road there." },
+  { id: "nature", label: "Nature", blurb: "Trees, gardens and quiet light." },
 ];
 
 export type Exif = {
@@ -29,6 +30,7 @@ export type Photo = {
   caption: string;
   place: string;
   exif?: Exif;
+  focus?: string;
 };
 
 export const exifLine = (e?: Exif) =>

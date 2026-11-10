@@ -1,6 +1,6 @@
 // Turns your original photos into web-ready files for the site.
 //
-//   1. Put originals in photos-raw/<category>/  (streets, vehicles, wildlife, weddings, mountains)
+//   1. Put originals in photos-raw/<category>/  (streets, vehicles, animals, weddings, mountains, nature)
 //   2. Run:  npm run photos
 //   3. Open public/photos/manifest.json and write real alt text, caption and place for each photo
 //   4. git add public/photos && git commit && git push
@@ -15,7 +15,7 @@ import exifr from "exifr";
 
 const RAW = "photos-raw";
 const OUT = "public/photos";
-const CATEGORIES = ["streets", "vehicles", "wildlife", "weddings", "mountains"];
+const CATEGORIES = ["streets", "vehicles", "animals", "weddings", "mountains", "nature"];
 const EXT = new Set([".jpg", ".jpeg", ".png", ".tif", ".tiff", ".webp"]);
 
 const slug = (s) => s.toLowerCase().replace(/\.[^.]+$/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "photo";
@@ -78,6 +78,7 @@ for (const cat of CATEGORIES) {
       caption: old?.caption ?? "",
       place: old?.place ?? "",
       exif: exif ?? old?.exif,
+      ...(old?.focus ? { focus: old.focus } : {}),
     };
     if (!old) added++;
     byFile.set(file, entry);

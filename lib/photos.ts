@@ -12,7 +12,8 @@ function isPhoto(p: any): p is Photo {
     typeof p.file === "string" && FILE_RE.test(p.file) &&
     typeof p.thumb === "string" && FILE_RE.test(p.thumb) &&
     Number.isFinite(p.w) && Number.isFinite(p.h) && p.w > 0 && p.h > 0 &&
-    typeof p.alt === "string" && typeof p.caption === "string" && typeof p.place === "string"
+    typeof p.alt === "string" && typeof p.caption === "string" && typeof p.place === "string" &&
+    (p.focus === undefined || (typeof p.focus === "string" && /^\d{1,3}% \d{1,3}%$/.test(p.focus)))
   );
 }
 

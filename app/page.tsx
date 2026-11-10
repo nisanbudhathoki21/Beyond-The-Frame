@@ -2,24 +2,45 @@ import Link from "next/link";
 import ScrollStory, { type Scene } from "@/components/ScrollStory";
 import { business } from "@/lib/config";
 import { getPhotos } from "@/lib/photos";
+import type { Photo } from "@/lib/photo-types";
 import { asset } from "@/lib/site";
 import { allServices } from "@/lib/services";
 import { npr } from "@/lib/format";
+
+type Chapter = { cat: string; idx?: number; id: string; title: string; text: string; label: string; side?: "left" | "right" };
+const chapters: Chapter[] = [
+  { cat: "streets", id: "streets", title: "Streets that never sit still.", text: "Markets, lanes and the people in them.", label: "Streets", side: "right" },
+  { cat: "vehicles", id: "roads", title: "Roads, and what crosses them.", text: "Cars, bikes and the highways they own.", label: "Cars and roads" },
+  { cat: "animals", id: "animals", title: "Small lives, close up.", text: "Dogs, birds and wildlife, found by waiting.", label: "Animals and birds", side: "right" },
+  { cat: "weddings", id: "weddings", title: "The day, and the minutes around it.", text: "Ceremonies, family and the small moments nobody planned.", label: "Weddings" },
+  { cat: "mountains", idx: 1, id: "mountains", title: "Hills, light, and the road there.", text: "Prayer flags, rivers and high valleys.", label: "Mountains and travel", side: "right" },
+];
 
 export default function Home() {
   const photos = getPhotos();
   const latest = photos.slice(0, 8);
   const from = (id: string) => allServices.find((s) => s.id === id)!;
+  const inCat = (c: string) => photos.filter((p) => p.category === c);
+  const bg = (p?: Photo) => (p ? { src: asset(p.file), alt: p.alt, focus: p.focus } : undefined);
 
-  const first = (c: string) => photos.find((p) => p.category === c);
-  const bg = (c: string) => { const p = first(c); return p ? { src: asset(p.file), alt: p.alt || `${c} photograph by Nisan Budhathoki` } : undefined; };
   const scenes: Scene[] = [
-    { id: "start", art: "sky", photo: bg("mountains"), title: "Nepal, one frame at a time.", text: "Streets, cars, Chitwan wildlife and weddings, shot by Nisan Budhathoki on a Canon Rebel T7 with an 18–55mm lens. Based in Sunwal.", cta: [{ href: "/portfolio/", label: "See the frames", primary: true }, { href: "/contact/", label: "Book a shoot" }] },
-    { id: "streets", art: "street", photo: bg("streets"), title: "Streets that never sit still.", text: "Markets, lanes and the people in them.", cta: [{ href: "/portfolio/#streets", label: "Streets" }], side: "right" },
-    { id: "roads", art: "road", photo: bg("vehicles"), title: "Roads, and what crosses them.", text: "Cars, bikes and the highways they own.", cta: [{ href: "/portfolio/#vehicles", label: "Cars and roads" }] },
-    { id: "chitwan", art: "wild", photo: bg("wildlife"), title: "Quiet mornings in Chitwan.", text: "Animals and birds from the national park, found by waiting.", cta: [{ href: "/portfolio/#wildlife", label: "Wildlife" }], side: "right" },
-    { id: "weddings", art: "wedding", photo: bg("weddings"), title: "The day, and the minutes around it.", text: "Ceremonies, family and the small moments nobody planned.", cta: [{ href: "/portfolio/#weddings", label: "Weddings" }] },
-    { id: "book", art: "dawn", photo: bg("mountains"), title: "Have a day worth keeping?", text: "Portraits from NPR 1,000. Weddings from NPR 8,000. Final price confirmed before the shoot.", cta: [{ href: "/contact/", label: "Book a shoot", primary: true }, { href: "/services/", label: "See rates" }], side: "right", tone: "dark" },
+    {
+      id: "start", art: "sky", photo: bg(inCat("mountains")[0]),
+      title: "Nepal, one frame at a time.",
+      text: "Mountains, animals, streets and weddings, shot on a Canon Rebel T7 with an 18–55mm lens. Based in Sunwal.",
+      cta: [{ href: "/portfolio/", label: "See the frames", primary: true }, { href: "/contact/", label: "Book a shoot" }],
+    },
+    // A chapter only appears once you have a real photo for it.
+    ...chapters.flatMap((c): Scene[] => {
+      const p = inCat(c.cat)[c.idx ?? 0];
+      return p ? [{ id: c.id, art: "sky", photo: bg(p), title: c.title, text: c.text, side: c.side, cta: [{ href: `/portfolio/#${c.cat}`, label: c.label }] }] : [];
+    }),
+    {
+      id: "book", art: "dawn", photo: bg(inCat("nature")[0]), tone: "dark", side: "right",
+      title: "Have a day worth keeping?",
+      text: `Portraits from ${npr(from("individual").priceNPR)}. Weddings from ${npr(from("wedding").priceNPR)}. Final price confirmed before the shoot.`,
+      cta: [{ href: "/contact/", label: "Book a shoot", primary: true }, { href: "/services/", label: "See rates" }],
+    },
   ];
 
   return (

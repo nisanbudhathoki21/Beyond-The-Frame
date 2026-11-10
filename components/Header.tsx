@@ -15,7 +15,7 @@ export default function Header() {
       <div className="wrap bar">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <b>{business.name}</b>
-          <span>{business.photographer}, {business.base.split(",")[0]}</span>
+          <span>{business.tagline}</span>
         </Link>
         <nav className="nav" id="site-nav" aria-label="Main" data-open={open}>
           <ul>

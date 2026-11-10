@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import BookingForm from "@/components/BookingForm";
 import { business } from "@/lib/config";
 
-export const metadata: Metadata = { title: "Book a shoot | Beyond the Frame", description: "Tell Nisan what you have in mind. Send your details on WhatsApp or email." };
+export const metadata: Metadata = { title: "Book a shoot | Beyond the Frame", description: "Tell me what you have in mind. Send your details on WhatsApp or email." };
 
 export default function Page() {
   return (

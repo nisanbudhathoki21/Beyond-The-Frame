@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "id": "animals-husky",
+    "category": "animals",
+    "file": "photos/animals/husky.webp",
+    "thumb": "photos/animals/husky-thumb.webp",
+    "w": 1086,
+    "h": 1448,
+    "alt": "A red and white husky with pale blue eyes sits on grass and looks up at the camera with its mouth open.",
+    "caption": "Blue eyes, big smile",
+    "place": "",
+    "focus": "50% 40%"
+  },
+  {
+    "id": "animals-sparrow",
+    "category": "animals",
+    "file": "photos/animals/sparrow.webp",
+    "thumb": "photos/animals/sparrow-thumb.webp",
+    "w": 415,
+    "h": 739,
+    "alt": "A sparrow perches on a rusty metal railing against a soft green background.",
+    "caption": "A sparrow on the railing",
+    "place": "",
+    "focus": "50% 45%"
+  },
+  {
+    "id": "mountains-prayer-flags",
+    "category": "mountains",
+    "file": "photos/mountains/prayer-flags.webp",
+    "thumb": "photos/mountains/prayer-flags-thumb.webp",
+    "w": 2000,
+    "h": 1722,
+    "alt": "A rock painted with a colourful Buddhist wheel and mantra in Tibetan script beside a white stupa, with lines of prayer flags across a pine-covered slope.",
+    "caption": "Prayer flags and a painted mani stone",
+    "place": "",
+    "focus": "50% 45%"
+  },
+  {
+    "id": "mountains-valley-bridge",
+    "category": "mountains",
+    "file": "photos/mountains/valley-bridge.webp",
+    "thumb": "photos/mountains/valley-bridge-thumb.webp",
+    "w": 1200,
+    "h": 1600,
+    "alt": "A suspension bridge crosses a pale glacial river in a cloudy Himalayan valley, with a yellow-roofed building and jagged grey cliffs behind.",
+    "caption": "A bridge over the river",
+    "place": "",
+    "focus": "50% 62%"
+  },
+  {
+    "id": "nature-tree-garden",
+    "category": "nature",
+    "file": "photos/nature/tree-garden.webp",
+    "thumb": "photos/nature/tree-garden-thumb.webp",
+    "w": 1333,
+    "h": 2000,
+    "alt": "A broad green tree in a hazy morning garden, circled by a low brick wall, with a trimmed hedge in the foreground.",
+    "caption": "A tree in the morning haze",
+    "place": "",
+    "focus": "50% 55%"
+  }
+]
